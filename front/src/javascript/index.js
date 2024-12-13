@@ -4,7 +4,7 @@ let intentosJugador2 = 0;
 let puntosJugador1 = 0; // Puntos acumulados para el Jugador 1
 let puntosJugador2 = 0; // Puntos acumulados para el Jugador 2
 let jugadorActual = 1; // 1 para Jugador 1, 2 para Jugador 2
-let maxIntentos = 10;
+let maxIntentos = 1;
 let partidas = 1; // Contador de partidas, comienza en 1
 
 function iniciarJuego() {
@@ -35,6 +35,11 @@ function actualizarPuntos() {
     document.getElementById('puntosJugador2').innerText = puntosJugador2;
 }
 
+function actualizarPartida() {
+    document.getElementById('numero').value = "";
+    partidas++;  // Incrementar el contador de partidas
+}
+
 function enviar() {
     let numeroIngresado = document.getElementById('numero').value;
     let resultadoField = document.getElementById('resultado');
@@ -56,12 +61,16 @@ function enviar() {
     if (jugadorActual === 1) {
         if (intentosJugador1 >= maxIntentos) {
             resultadoField.innerHTML = "Jugador 1 ha alcanzado el máximo de intentos.";
-            return; // No hacer nada más si se alcanzó el máximo de intentos
+            document.getElementById('numero').value = "";
+             return;// No hacer nada más si se alcanzó el máximo de intentos
         }
         intentosJugador1++;
-    } else {
+    } 
+    if (jugadorActual === 2){
         if (intentosJugador2 >= maxIntentos) {
             resultadoField.innerHTML = "Jugador 2 ha alcanzado el máximo de intentos.";
+            actualizarPartida ()
+            actualizarIntentos();
             return; // No hacer nada más si se alcanzó el máximo de intentos
         }
         intentosJugador2++;
@@ -85,12 +94,12 @@ function enviar() {
             puntosJugador2 += puntosGanados; // Aumentar los puntos del Jugador 2
         }
         resultadoField.innerHTML = "¡Felicidades! jugador " + jugadorActual + " Has adivinado el número " + numeroAleatorio;
-
+        
         // Actualizar los puntos de ambos jugadores
         actualizarPuntos();
-
-        // Si un jugador adivina el número, reiniciar el juego
-        partidas++;  // Incrementar el contador de partidas
+        actualizarPartida ();
+        
+        
         setTimeout(() => {
             iniciarJuego();  // Reiniciar el juego después de 2 segundos
         }, 4000); // Esperar 4 segundos antes de reiniciar
@@ -100,6 +109,7 @@ function enviar() {
 
     // Cambiar al siguiente jugador después de cada intento
     jugadorActual = (jugadorActual === 1) ? 2 : 1;
+    
 }
 
 function abandonar() {
