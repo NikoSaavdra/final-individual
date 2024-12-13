@@ -1,44 +1,41 @@
-button {
-    font-size: xx-large;
-}
-
-.mio {
-    background-color: rgb(red, green, blue);
-}
-
-/* Estilos básicos */
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
-}
-
-h1 {
     text-align: center;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.container {
+    width: 80%;
+    margin: auto;
 }
 
-table, th, td {
-    border: 1px solid black;
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 5px;
 }
 
-th, td {
-    padding: 10px;
-    text-align: center;
-}
-
-button.borrar-btn {
+.red {
     background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
 }
 
-button.borrar-btn:hover {
-    background-color: darkred;
+.blue {
+    background-color: blue;
+}
+
+.game-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 10px;
 }

@@ -12,144 +12,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
-  <h1 style="font-weight: bolder;">Maestro</h1>
-        <div class="btn-group" role="group" aria-label="Basic example">
 
-        <button id="Actualizar" button" class="btn btn-primary btn-lg">Refrescar</button>
-        <div id="resActualizar"></div>
+    <div class="container">
+        <div class="row my-5">
 
-        <button id="Crear" "button" class="btn btn-default btn-lg">Nuevo</button>
-        <div id="resCrear"></div>
-    </div>
-    <table class="table">
-        <thead>
-        
-          <tr>
-            <th id="secreto" style="font-size: small" scope="col">#</th>
-            <th style="font-size: small"scope="col">NOMBRE</th>
-            <th style="font-size: small"scope="col">APELLIDO</th>
-            <th style="font-size: small"scope="col">ACCION</th> 
-          </tr>
-      </thead>
-        <tbody>
-            <div id="refrescar">
-              <tr>
-                <th id="secreto" scope="row">1</th>
-                <td>Fernando</td>
-                <td>Alguno</td>
-                <td><button id="borrar" class="btn btn-danger btn-lg borrar" data-id="1">Borrar</button></td>
-               </tr>
-              <tr>
-                <th id="secreto" scope="row">2</th>
-                <td>Nico</td>
-                <td>Otro</td>
-                <td><button id="borrar" class="btn btn-danger btn-lg borrar" data-id="2">Borrar</button></td>
-              </tr>
+            <div class="col-6 text-center">
+                <span>Jugador 1</span>
+                <div class="circle red"></div>
+                <p>Intentos: <span id="intentosJugador1">0</span> / 10</p>
+                <p>Puntos: <span id="puntosJugador1">0</span></p>
             </div>
-        </tbody>
-        <script>
-          jQuery(document).ready(function() {
-            $(secreto).hide();       
-         });
-         jQuery(document).ready(function() {
-            $(mostrarocultar).hide();       
-         });
-        </script>
-    </table>    
-    
-    <div id="mostrarocultar">
-    <h2 style="font-weight: bolder;"> Detalle</h2>
+        
+            <div class="col-6 text-center">
+                <span>Jugador 2</span>
+                <div class="circle blue"></div>
+                <p>Intentos: <span id="intentosJugador2">0</span> / 10</p>
+                <p>Puntos: <span id="puntosJugador2">0</span></p>
+            </div>
+        </div>
 
-    <label for="nombre">NOMBRE</label>
-    <input type="text" id="nombre">
-  
-    <label for="apellido">APELLIDO</label>
-    <input type="text" id="apellido">
     
-    <button id="Guardar" class="btn-default btn-lg btn-lg">Guardar</button>
-    <div id="resActualizar"></div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 game-box">
+                <div class="mb-3">
+                    <label for="partida" class="form-label">Partida:</label>
+                    <input type="number" id="partida" class="form-control" disabled value="1">
+                </div>
+                <div class="mb-3">
+                    <p>Elija un número del 1 al 100</p>
+                    <input type="number" id="numero" class="form-control" min="1" max="100">
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="enviar()">Enviar</button>
+                    <button class="btn btn-danger" onclick="abandonar()">Abandonar</button>
+                </div>
+            </div>
+        </div>
 
-    <button id="Cancelar" class="btn btn-default btn-lg btn-lg">Cancelar</button>
-    <div id="resActualizar"></div>
+        <div class="result my-4" id="resultado"></div>
+
     </div>
-    
-    <script> 
-
-$(document).ready(function() {
-        // Función para refrescar los datos (simulada con AJAX)
-        $('#Actualizar').click(function() {
-            $.ajax({
-                url: "https://my-json-server.typicode.com/desarrollo-seguro/dato/solicitudes", 
-                type: 'GET',
-                success: function(data) {
-                    $('#refrescar').html(data); 
-                    alert("Error")
-                },
-                error: function() {
-                    $('#resActualizar').html('<div class="alert alert-danger">Error al refrescar los datos</div>');
-                }
-            });
-        });
-
-        // Función para crear nuevo registro (simulada con AJAX)
-        $('#Crear').click(function() {
-            $('#nombre').val('');
-            $('#apellido').val('');
-            $('#mostrarocultar').show();
-            
-      
-        });
-        $('#Actualizar').click(function() {
-            $('#nombre').val('');
-            $('#apellido').val('');
-            location.reload();
-          });
-
-        // Función para guardar nuevo registro
-        $('#Guardar').click(function() {
-            var nombre = $('#nombre').val();
-            var apellido = $('#apellido').val();
-
-            $.ajax({
-                url:"https://my-json-server.typicode.com/desarrollo-seguro/dato/solicitudes",
-                type: 'POST',
-                data: { nombre: nombre, apellido: apellido },
-                success: function(response) {
-                    $('#resCrear').html('<div class="alert alert-success">Datos guardados</div>');
-                    $('#refrescar').append('<tr><th scope="row">Nuevo</th><td>' + nombre + '</td><td>' + apellido + '</td><td><button class="btn btn-danger btn-lg borrar" data-id="new">Borrar</button></td></tr>');
-                },
-                error: function() {
-                    $('#resCrear').html('<div class="alert alert-danger">Error al guardar los datos</div>');
-                }
-            });
-        });
-
-        // Función para borrar registro
-        $(document).on('click', '.borrar', function() {
-            var id = $(this).data('id');
-            $.ajax({
-                url:"https://my-json-server.typicode.com/desarrollo-seguro/dato/solicitudes",
-                type: 'POST',
-                data: { id: id },
-                success: function(response) {
-                    $('#resBorrar').html('<div class="alert alert-success">Registro borrado</div>');
-                    $(this).closest('tr').remove();
-                },
-                error: function() {
-                    $('#resBorrar').html('<div class="alert alert-danger">Error al borrar el registro</div>');
-                }
-            });
-        });
-
-        // Función para cancelar la creación de un nuevo registro
-        $('#Cancelar').click(function() {
-            $('#nombre').val('');
-            $('#apellido').val('');
-            $("#mostrarocultar").hide();
-        });
-    });
-  </script>
-
+        
     <script src="./javascript/index.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
