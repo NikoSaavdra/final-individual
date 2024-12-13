@@ -4,7 +4,7 @@ let intentosJugador2 = 0;
 let puntosJugador1 = 0; // Puntos acumulados para el Jugador 1
 let puntosJugador2 = 0; // Puntos acumulados para el Jugador 2
 let jugadorActual = 1; // 1 para Jugador 1, 2 para Jugador 2
-let maxIntentos = 1;
+let maxIntentos = 10;
 let partidas = 1; // Contador de partidas, comienza en 1
 
 function iniciarJuego() {

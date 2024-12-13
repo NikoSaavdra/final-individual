@@ -1,6 +1,7 @@
-body {
+.body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: lightblue;
 }
 
 .container {
@@ -25,7 +26,7 @@ body {
 }
 
 .game-box {
-    background-color: #f8f9fa;
+    background-color: #2e6faf;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -37,5 +38,28 @@ body {
 }
 
 button {
-    margin-top: 10px;
+    margin-top: 15px;
+}
+
+.color {
+    color: antiquewhite;
+}
+
+
+ {
+    background-color: light;
+    width: 100px;
+    border: 15px solid green;
+    padding: 50px;
+    margin: 20px;
+    text-aling:center;
+  }
+
+.intentos {
+  background-color: light;
+  width: 100px;
+  border: 15px solid green;
+  padding: 50px;
+  margin: 20px;
+  text-aling:center;
 }
