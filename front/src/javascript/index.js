@@ -68,7 +68,7 @@ function enviar() {
     }
 
     // Actualizar los intentos de cada jugador
-    actualizarIntentos();
+            actualizarIntentos();
 
     // Lógica del juego: comparar el número ingresado con el número aleatorio
     if (numeroIngresado < numeroAleatorio) {
