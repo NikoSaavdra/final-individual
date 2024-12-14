@@ -1,8 +1,8 @@
 package ces.santander.ascender;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Map;
 
 class JuegoAdivinanzaTest {
 
@@ -15,52 +15,23 @@ class JuegoAdivinanzaTest {
     }
 
     @Test
-    void testJugadorGanaYRecibePuntos() {
-        // Simulamos una partida en la que el jugador adivina correctamente
-        String resultado = juego.jugarPartida("Jugador1", 30);
+    void testNingunJugadorAcierta() {
 
-        // Verificamos que el resultado contiene la palabra "¡Correcto!"
-        assertTrue(resultado.contains("¡Correcto!"));
+        // Supongamos que el número secreto es 45 y ambos jugadores fallan durante 10 intentos
+        String resultado = juego.jugarPartida("Juan", "Pedro", 30, 50);
+
+        assertTrue(resultado.contains("Ningún jugador adivinó el número secreto en 10 intentos"));
     }
 
     @Test
-    void testJugadorPierdePartidaConNumeroMayor() {
-        
-        String resultado = juego.jugarPartida("Jugador2", 10);
+    void testPuntajeCalculadoCorrectamente() {
 
-        // Verificamos que el resultado indique que el número es mayor
-        assertTrue(resultado.contains("El número es mayor"));
+        // Supongamos que el número secreto es 45 y el jugador 2 adivina correctamente
+        String resultado = juego.jugarPartida("Juan", "Pedro", 30, 45);
+
+        assertTrue(resultado.contains("¡Pedro ha ganado!"));
+        assertTrue(resultado.contains("Adivinaste el número en 1 intentos"));
+        assertTrue(resultado.contains("Total de puntos: 10"));
     }
 
-    @Test
-    void testJugadorPierdePartidaConNumeroMenor() {
-        
-        String resultado = juego.jugarPartida("Jugador1", 80);
-
-        // Verificamos que el resultado indique que el número es menor
-        assertTrue(resultado.contains("El número es menor"));
-    }
-
-    @Test
-    void testCalculoDePuntos() {
-
-        juego.jugarPartida("Jugador2", 60);
-        Map<String, Integer> puntajes = juego.obtenerPuntajes();
-
-        // Verificamos que el jugador haya recibido puntos
-        assertNotNull(puntajes.get("Jugador2"), "El jugador no tiene puntaje registrado.");
-        assertTrue(puntajes.get("Jugador2") > 0, "El puntaje del jugador es incorrecto.");
-    }
-
-    @Test
-    void testAcumulacionDePuntos() {
-        // Jugador 1 juega dos partidas y obtiene puntos en cada una
-        juego.jugarPartida("Jugador1", 25);
-        juego.jugarPartida("Jugador1", 75);
-
-        Map<String, Integer> puntajes = juego.obtenerPuntajes();
-
-        // Verificamos que el jugador haya acumulado puntos en ambas rondas
-        assertTrue(puntajes.get("Jugador1") > 0);
-    }
 }
