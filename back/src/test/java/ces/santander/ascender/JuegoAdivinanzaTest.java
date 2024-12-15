@@ -4,34 +4,51 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class JuegoAdivinanzaTest {
+public class JuegoAdivinanzaTest {
 
     private JuegoAdivinanza juego;
 
     @BeforeEach
-    void setUp() {
-        // Inicializamos el juego antes de cada prueba
+    public void setup() {
         juego = new JuegoAdivinanza();
     }
 
     @Test
-    void testNingunJugadorAcierta() {
-
-        // Supongamos que el número secreto es 45 y ambos jugadores fallan durante 10 intentos
-        String resultado = juego.jugarPartida("Juan", "Pedro", 30, 50);
-
-        assertTrue(resultado.contains("Ningún jugador adivinó el número secreto en 10 intentos"));
+    public void testInicializacionPuntajes() {
+        String resultado = juego.jugarJuego("Jugador1", "Jugador2", 50, 60);
+        // Verificar que los puntajes se inicializan a 0 para ambos jugadores
+        assertTrue(resultado.contains("Jugador1=0"));
+        assertTrue(resultado.contains("Jugador2=0"));
     }
 
     @Test
-    void testPuntajeCalculadoCorrectamente() {
-
-        // Supongamos que el número secreto es 45 y el jugador 2 adivina correctamente
-        String resultado = juego.jugarPartida("Juan", "Pedro", 30, 45);
-
-        assertTrue(resultado.contains("¡Pedro ha ganado!"));
-        assertTrue(resultado.contains("Adivinaste el número en 1 intentos"));
-        assertTrue(resultado.contains("Total de puntos: 10"));
+    public void testJugador1Gana() {
+        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 50, 40, 1);
+        assertTrue(resultado.contains("¡Jugador1 ha ganado!"));
+        assertTrue(resultado.contains("Total de puntos:"));
     }
 
+    @Test
+    public void testJugador2Gana() { 
+        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 40, 50, 1);
+        assertTrue(resultado.contains("¡Jugador2 ha ganado!"));
+        assertTrue(resultado.contains("Total de puntos:"));
+    }
+
+    @Test
+    public void testNingunJugadorAdivina() {      
+        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 100, 20, 1);
+        assertTrue(resultado.contains("Ningún jugador adivinó el número secreto"));
+    }
+
+    @Test
+    public void testCalculoPuntos() {
+    
+        int puntos = juego.calcularPuntos(5);
+        assertEquals(6, puntos); // 11 - intentos = 11 - 5 = 6
+
+        puntos = juego.calcularPuntos(10);
+        assertEquals(1, puntos); // 11 - 10 = 1
+    }
 }
+
