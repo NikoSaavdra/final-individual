@@ -39,7 +39,9 @@ function actualizarPuntos() {
 
 function actualizarPartida() {
     document.getElementById('numero').value = "";
+    if (partidas<10){
     partidas++;  // Incrementar el contador de partidas
+    }
 }
 
 function enviar() {
