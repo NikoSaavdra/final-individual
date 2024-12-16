@@ -12,8 +12,10 @@
     color: darkslategray;
   }
 
+
 .container {
   width: 100%;
+  height: 100%;
   margin: auto;
 
 }
@@ -35,15 +37,14 @@
 }
 
 .activePlayer1 {
-    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.20);
+    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.10);
     border: solid 2px rgb(235, 8, 8);
     width: 50px;
     height: 40px;
-    
 }
 
 .activePlayer2 {
-    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.20);
+    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.10);
     border: solid 2px rgb(7, 7, 238);
     width: 50px;
     height: 40px;
@@ -85,5 +86,8 @@ button {
     
  }
 
+
+
+ 
 
  

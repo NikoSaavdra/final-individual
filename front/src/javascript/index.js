@@ -61,8 +61,6 @@ function enviar() {
 
     // Verificar si el jugador actual ha alcanzado el máximo de intentos
     if (jugadorActual === 1) {
-        /*$("#jugador2").removeClass("activePlayer");
-        $("#jugador1").addClass("activePlayer");*/
         if (intentosJugador1 >= maxIntentos) {
             resultadoField.innerHTML = "Jugador 1 ha alcanzado el máximo de intentos.";
             document.getElementById('numero').value = "";
@@ -71,8 +69,6 @@ function enviar() {
         intentosJugador1++;
     } 
     if (jugadorActual === 2){
-        /*$("#jugador1").removeClass("activePlayer");
-        $("#jugador2").addClass("activePlayer");*/
         if (intentosJugador2 >= maxIntentos) {
             resultadoField.innerHTML = "Jugador 2 ha alcanzado el máximo de intentos.";
             actualizarPartida ()
@@ -134,3 +130,4 @@ function abandonar() {
 }
 
 window.onload = iniciarJuego;  // Iniciar juego al cargar la página
+
