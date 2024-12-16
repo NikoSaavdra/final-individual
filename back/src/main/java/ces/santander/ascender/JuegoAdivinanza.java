@@ -22,11 +22,12 @@ public class JuegoAdivinanza {
 
     public String jugarPartida(String nombreJugador1, String nombreJugador2, int adivinanzaJugador1, int adivinanzaJugador2, int partida) {
         Random random = new Random();
-        int numeroSecreto = random.nextInt(101);  
+        int numeroSecreto = random.nextInt(100) + 1;  
         int intentosJugador1 = 0;
         int intentosJugador2 = 0;
         
-        for (int i = 0; i < MAX_INTENTOS;i++) {
+        for (int i = 0; i <MAX_INTENTOS; i++ ) {
+
             String jugadorActual = (i % 2 == 0) ? nombreJugador1 : nombreJugador2;  // Alternamos entre jugador1 y jugador2
             int intentoActual = (jugadorActual.equals(nombreJugador1)) ? adivinanzaJugador1 : adivinanzaJugador2;
             int intentos = (jugadorActual.equals(nombreJugador1)) ? ++intentosJugador1 : ++intentosJugador2;
@@ -36,6 +37,7 @@ public class JuegoAdivinanza {
                 puntosJugadores.put(jugadorActual, puntosJugadores.get(jugadorActual) + puntos);
                 return "¡" + jugadorActual + " ha ganado! Adivinaste el número en " + intentos + " intentos. Has ganado "
                         + puntos + " puntos. Total de puntos: " + puntosJugadores.get(jugadorActual);
+                        
             } else if (intentoActual < numeroSecreto) {
                 return jugadorActual + ": El número es mayor a " + intentoActual;
             } else {
