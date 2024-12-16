@@ -33,14 +33,23 @@ function actualizarIntentos() {
     document.getElementById('intentosJugador2').innerText = intentosJugador2;
 }
 function actualizarPuntos() {
-    document.getElementById('puntosJugador1').innerText = puntosJugador1;
-    document.getElementById('puntosJugador2').innerText = puntosJugador2;
+    
 }
 
 function actualizarPartida() {
     document.getElementById('numero').value = "";
-    if (partidas<10){
-    partidas++;  // Incrementar el contador de partidas
+    if (partidas < 10) {
+        partidas++;  
+    } else {
+        document.getElementById('numero').setAttribute('disabled', 'true');  // Deshabilitar campo de entrada
+        let resultadoField = document.getElementById('resultado');
+        if (puntosJugador1 > puntosJugador2) {
+            resultadoField.innerHTML = "Jugador 1 ha ganado";
+        } else if (puntosJugador2 > puntosJugador1) {
+            resultadoField.innerHTML = "Jugador 2 ha ganado";
+        } else {
+            resultadoField.innerHTML = "¡Empate!";
+        }
     }
 }
 
@@ -79,6 +88,7 @@ function enviar() {
         }
         intentosJugador2++;
     }
+
 
     // Actualizar los intentos de cada jugador
             actualizarIntentos();
