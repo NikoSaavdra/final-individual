@@ -24,6 +24,7 @@ public class JuegoAdivinanzaTest {
     @Test
     public void testJugador1Gana() {
         String resultado = juego.jugarPartida("Jugador1", "Jugador2", 50, 40, 1);
+        assertTrue(resultado.contains("¡Numero menor!"));
         assertTrue(resultado.contains("¡Jugador1 ha ganado!"));
         assertTrue(resultado.contains("Total de puntos:"));
     }
@@ -37,7 +38,7 @@ public class JuegoAdivinanzaTest {
 
     @Test
     public void testNingunJugadorAdivina() {      
-        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 100, 20, 1);
+        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 100, 1, 1);
         assertTrue(resultado.contains("Ningún jugador adivinó el número secreto"));
     }
 
