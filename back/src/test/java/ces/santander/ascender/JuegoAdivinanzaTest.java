@@ -22,10 +22,18 @@ public class JuegoAdivinanzaTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testNumeroEsMayor() {
         String resultado = juego.jugarPartida("Jugador1", "Jugador2", 1, 2, 1);
         assertTrue(resultado.contains("El número es mayor"));
         
+=======
+    public void testJugador1Gana() {
+        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 50, 40, 1);
+        assertTrue(resultado.contains("¡Numero menor!"));
+        assertTrue(resultado.contains("¡Jugador1 ha ganado!"));
+        assertTrue(resultado.contains("Total de puntos:"));
+>>>>>>> origin/main
     }
 
     @Test
@@ -36,10 +44,16 @@ public class JuegoAdivinanzaTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testNumeroInvalido() {      
         String resultado = juego.jugarJuego("Jugador1", "Jugador2", 110, 102);
         assertFalse(resultado.contains("110"));
         assertFalse(resultado.contains("102"));
+=======
+    public void testNingunJugadorAdivina() {      
+        String resultado = juego.jugarPartida("Jugador1", "Jugador2", 100, 1, 1);
+        assertTrue(resultado.contains("Ningún jugador adivinó el número secreto"));
+>>>>>>> origin/main
     }
 
     @Test

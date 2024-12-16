@@ -26,7 +26,11 @@ public class JuegoAdivinanza {
         int intentosJugador1 = 0;
         int intentosJugador2 = 0;
         
+<<<<<<< HEAD
         for (int i = 0; i <MAX_INTENTOS; i++ ) {
+=======
+        for (int i = 0; i < MAX_INTENTOS;i++) {
+>>>>>>> origin/main
             String jugadorActual = (i % 2 == 0) ? nombreJugador1 : nombreJugador2;  // Alternamos entre jugador1 y jugador2
             int intentoActual = (jugadorActual.equals(nombreJugador1)) ? adivinanzaJugador1 : adivinanzaJugador2;
             int intentos = (jugadorActual.equals(nombreJugador1)) ? ++intentosJugador1 : ++intentosJugador2;
@@ -41,6 +45,7 @@ public class JuegoAdivinanza {
             } else {
                 return jugadorActual + ": El número es menor a " + intentoActual;
             }
+            
         }
         return "Ningún jugador adivinó el número secreto en " + MAX_INTENTOS + " intentos.";
     }

@@ -16,6 +16,8 @@ function iniciarJuego() {
     intentosJugador1 = 0;
     intentosJugador2 = 0;
     jugadorActual = 1; // Comienza con el Jugador 1
+    $("#jugador2").removeClass("activePlayer2");
+    $("#jugador1").addClass("activePlayer1");
 
      // No se reinician los puntos, ya que son acumulables
     actualizarIntentos();
@@ -59,6 +61,8 @@ function enviar() {
 
     // Verificar si el jugador actual ha alcanzado el máximo de intentos
     if (jugadorActual === 1) {
+        /*$("#jugador2").removeClass("activePlayer");
+        $("#jugador1").addClass("activePlayer");*/
         if (intentosJugador1 >= maxIntentos) {
             resultadoField.innerHTML = "Jugador 1 ha alcanzado el máximo de intentos.";
             document.getElementById('numero').value = "";
@@ -67,6 +71,8 @@ function enviar() {
         intentosJugador1++;
     } 
     if (jugadorActual === 2){
+        /*$("#jugador1").removeClass("activePlayer");
+        $("#jugador2").addClass("activePlayer");*/
         if (intentosJugador2 >= maxIntentos) {
             resultadoField.innerHTML = "Jugador 2 ha alcanzado el máximo de intentos.";
             actualizarPartida ()
@@ -81,9 +87,9 @@ function enviar() {
 
     // Lógica del juego: comparar el número ingresado con el número aleatorio
     if (numeroIngresado < numeroAleatorio) {
-        resultadoField.innerHTML = "Es más grande que " + numeroIngresado;
+        resultadoField.innerHTML = "Es mayor que " + numeroIngresado;
     } else if (numeroIngresado > numeroAleatorio) {
-        resultadoField.innerHTML = "Es más pequeño que " + numeroIngresado;
+        resultadoField.innerHTML = "Es menor que " + numeroIngresado;
     } else {
 
         let puntosGanados = maxIntentos - (jugadorActual === 1 ? intentosJugador1 : intentosJugador2) + 1;
@@ -108,8 +114,17 @@ function enviar() {
     }
 
     // Cambiar al siguiente jugador después de cada intento
-    jugadorActual = (jugadorActual === 1) ? 2 : 1;
-    
+    //jugadorActual = (jugadorActual === 1) ? 2 : 1;
+    if (jugadorActual === 1) {
+        jugadorActual = 2;
+        $("#jugador1").removeClass("activePlayer1");
+        $("#jugador2").addClass("activePlayer2");
+    } else {
+        jugadorActual = 1;
+        $("#jugador2").removeClass("activePlayer2");
+        $("#jugador1").addClass("activePlayer1");
+    }
+
 }
 
 function abandonar() {

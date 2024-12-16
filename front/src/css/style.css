@@ -1,0 +1,89 @@
+.body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: rgb(253, 253, 253);
+}
+
+.titulo1 {
+    background-color: #2e6faf;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: darkslategray;
+  }
+
+.container {
+  width: 100%;
+  margin: auto;
+
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.red {
+    background-color: hsl(0, 100%, 50%);
+}
+
+.blue {
+    background-color: rgb(69, 106, 224);
+}
+
+.activePlayer1 {
+    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.20);
+    border: solid 2px rgb(235, 8, 8);
+    width: 50px;
+    height: 40px;
+    
+}
+
+.activePlayer2 {
+    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.20);
+    border: solid 2px rgb(7, 7, 238);
+    width: 50px;
+    height: 40px;
+}
+
+.game-box {
+    background-color: #2e6faf;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+button {
+    margin-top: 15px;
+}
+
+.color {
+    color: rgb(172, 24, 24);
+}
+
+.circleblue {
+    background-color: blue;
+}
+.partida {
+   text-align: center;
+}
+.col {
+    background-color:aliceblue;
+ }
+ 
+ .container {
+    background-color:aliceblue;
+    
+ }
+
+
+ 
