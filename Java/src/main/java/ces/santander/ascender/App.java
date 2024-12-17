@@ -1,23 +1,23 @@
 package ces.santander.ascender;
 
+import java.util.ArrayList;
+
 public class App {
 
     public static void main(String[] args) {
 
+        ArrayList<ProductoMenu> productos = new ArrayList<>();
+        productos.add(new ProductoMenu(1, "Pan", 8, 1.99));
+        productos.add(new ProductoMenu(2, "Sal", 3, 2.50));
+        productos.add(new ProductoMenu(3, "Harina", 4, 5.50));
+
         ProductoMenu menu = new ProductoMenu(0, "", 0, 0.0);
 
-        ProductoMenu[] productos = {
-                new ProductoMenu(1, "Pizza", 4, 10.99),
-                new ProductoMenu(2, "Hamburguesa", 3, 5.99),
-                new ProductoMenu(3, "Pasta", 4, 8.50)
-        };
-
         try {
-            // Llamar al método elegirMenu que maneja el menú
-            char resultado = menu.elegirMenu(productos);
-            System.out.println("Resultado del menú: " + resultado);
+                menu.elegirMenu(productos);
+                
         } catch (Exception e) {
-            // Capturar cualquier excepción y mostrar el mensaje de error
+        
             System.err.println("Se ha producido un error en el menú: " + e.getMessage());
         }
     }

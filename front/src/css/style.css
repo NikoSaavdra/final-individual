@@ -1,93 +1,84 @@
-.body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: rgb(253, 253, 253);
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
-
-.titulo1 {
-    background-color: #2e6faf;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: darkslategray;
-  }
-
 
 .container {
-  width: 100%;
-  height: 100%;
-  margin: auto;
-
-}
-
-.circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-top: 5px;
-}
-
-.red {
-    background-color: hsl(0, 100%, 50%);
-}
-
-.blue {
-    background-color: rgb(69, 106, 224);
-}
-
-.activePlayer1 {
-    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.10);
-    border: solid 2px rgb(235, 8, 8);
-    width: 50px;
-    height: 40px;
-}
-
-.activePlayer2 {
-    box-shadow: 0 15px 8px rgba(0, 0, 0, 0.10);
-    border: solid 2px rgb(7, 7, 238);
-    width: 50px;
-    height: 40px;
-}
-
-.game-box {
-    background-color: #2e6faf;
+    width: 80%;
+    margin: 0 auto;
     padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.result {
-    font-size: 18px;
-    font-weight: bold;
+h1 {
     text-align: center;
+    color: #333;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 button {
-    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.color {
-    color: rgb(172, 24, 24);
+button:hover {
+    background-color: #45a049;
 }
 
-.circleblue {
-    background-color: blue;
+.product-list {
+    margin-top: 30px;
 }
-.partida {
-   text-align: center;
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
-.col {
-    background-color:aliceblue;
- }
- 
- .container {
-    background-color:aliceblue;
-    
- }
 
+table, th, td {
+    border: 1px solid #ddd;
+}
 
+th, td {
+    padding: 10px;
+    text-align: center;
+}
 
- 
+th {
+    background-color: #f2f2f2;
+}
 
- 
+button.modify-btn, button.delete-btn {
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button.modify-btn {
+    background-color: #ff9800;
+    color: white;
+}
+
+button.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
