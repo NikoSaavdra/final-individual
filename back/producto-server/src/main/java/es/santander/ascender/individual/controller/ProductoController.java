@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/productos")
+@CrossOrigin(origins = "http://localhost:1234")
+
 public class ProductoController {
 
     private Map<Long, Producto> productos = new HashMap<>();
@@ -95,21 +98,28 @@ public class ProductoController {
     }
 
     @PostMapping("/{id}/compra")
-    public ResponseEntity<String> comprarProducto(@PathVariable Long id) {
-        Producto producto = productos.get(id);
+    public ResponseEntity<Map<String, Object>> comprarProducto(@PathVariable Long id) {
+    Producto producto = productos.get(id);
 
-        if (producto == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (producto.getCantidad() <= 0) {
-            return ResponseEntity.badRequest().body("Producto sin stock disponible.");
-        }
-
-        producto.setCantidad(producto.getCantidad() - 1);
-
-        return ResponseEntity.ok("Compra realizada con éxito. Producto: " + producto.getNombre());
+    if (producto == null) {
+        return ResponseEntity.notFound().build();
     }
+
+    if (producto.getCantidad() <= 0) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "No se puede comprar, no hay stock disponible.");
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    producto.setCantidad(producto.getCantidad() - 1);
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("message", "Compra realizada con éxito.");
+    response.put("product", producto); 
+
+    return ResponseEntity.ok(response);
+}
+
 
 
     public Map<Long, Producto> getProductos() {

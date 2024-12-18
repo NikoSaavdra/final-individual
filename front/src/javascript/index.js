@@ -1,90 +1,112 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const apiUrl = 'http://localhost:8080/productos'; // URL del servidor
-    const productosTable = document.getElementById('productos').getElementsByTagName('tbody')[0];
-    const createBtn = document.getElementById('createBtn');
-    
-    // Función para cargar los productos
-    function cargarProductos() {
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                productosTable.innerHTML = '';
-                data.forEach(producto => {
-                    let row = productosTable.insertRow();
-                    row.innerHTML = `
-                    <tr>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.cantidad}</td>
-                        <td>${producto.precio}</td>
-                        <td><button class="delete-btn" onclick="borrarProducto(${producto.id})">Borrar</button></td>
-                        <td><button class="buy-btn" onclick="comprarProducto(${producto.id})">Comprar</button></td>
-                    </tr>
-                    
-                        
-                        
-                    `
-                });
-            })
-            .catch(error => console.log('Error al cargar los productos:', error));
-    }
-/*
-    // Función para crear un nuevo producto
-    createBtn.addEventListener('click', function() {
-        const nombre = document.getElementById('nombre').value;
-        const cantidad = document.getElementById('cantidad').value;
-        const precio = document.getElementById('precio').value;
-        
-        const nuevoProducto = { nombre, cantidad, precio };
+document.addEventListener("DOMContentLoaded", function () {
+  const apiUrl = 'http://localhost:8080/productos'; // URL del servidor
+  const tableBody = document.querySelector('#productosTable tbody');
+  const createProductBtn = document.getElementById('createProductBtn');
 
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(nuevoProducto)
-        })
-        .then(response => response.json())
-        .then(data => {
-            cargarProductos(); // Recargar la lista de productos
-        })
-        .catch(error => console.log('Error al crear producto:', error));
-    });
+  const createProductModal = document.getElementById('createProductModal');
+  const closeCreateProductModal = createProductModal.querySelector('.close-btn');
+  const confirmCreateBtn = document.getElementById('confirmCreateBtn');
+  const cancelCreateBtn = document.getElementById('cancelCreateBtn');
 
-    // Función para modificar un producto
-    window.modificarProducto = function(id) {
-        const nombre = prompt("Nuevo nombre del producto:");
-        const cantidad = prompt("Nueva cantidad:");
-        const precio = prompt("Nuevo precio:");
+  let selectedProduct = null; // Producto seleccionado para comprar
 
-        const productoModificado = { nombre, cantidad, precio };
+  // Cargar productos
+  function loadProducts() {
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);  // Verifica la respuesta aquí
+        tableBody.innerHTML = ''; // Limpiar la tabla antes de agregar nuevos datos
 
-        fetch(`${apiUrl}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productoModificado)
-        })
-        .then(response => response.json())
-        .then(data => {
-            cargarProductos(); // Recargar la lista de productos
-        })
-        .catch(error => console.log('Error al modificar producto:', error));
+        data.forEach(product => {
+          const row = document.createElement('tr');
+
+          const nameCell = document.createElement('td');
+          nameCell.textContent = product.nombre;
+
+          const quantityCell = document.createElement('td');
+          quantityCell.textContent = product.cantidad;
+
+          const priceCell = document.createElement('td');
+          priceCell.textContent = product.precio;
+
+          const actionsCell = document.createElement('td');
+
+          const buyButton = document.createElement('button');
+          buyButton.classList.add('buy-btn');
+          buyButton.textContent = 'Comprar';
+
+          const borrarButton = document.createElement('button');
+          borrarButton.classList.add('delete-btn');
+          borrarButton.textContent = 'Borrar';
+
+          // Desactivar el botón si la cantidad es 0
+          if (product.cantidad === 0) {
+            buyButton.disabled = true;
+            buyButton.textContent = 'Sin stock';  // Cambiar el texto si no hay stock
+          } else {
+            buyButton.onclick = function () {
+              showBuyModal(product); // Mostrar el modal con los datos del producto
+            };
+          }
+
+          actionsCell.appendChild(buyButton);
+          actionsCell.appendChild(borrarButton);
+          row.appendChild(nameCell);
+          row.appendChild(quantityCell);
+          row.appendChild(priceCell);
+          row.appendChild(actionsCell);
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error al cargar los productos:', error);
+      });
+  }
+
+  // Mostrar el modal para crear un producto
+  createProductBtn.onclick = function () {
+    createProductModal.style.display = 'block';
+  };
+
+  // Cerrar el modal
+  closeCreateProductModal.onclick = function () {
+    createProductModal.style.display = 'none';
+  };
+
+  // Cancelar creación del producto
+  cancelCreateBtn.onclick = function () {
+    createProductModal.style.display = 'none'; // Cerrar el modal si se cancela
+  };
+
+  // Confirmar la creación del producto
+  confirmCreateBtn.onclick = function () {
+    const newProduct = {
+      nombre: document.getElementById('createProductName').value,
+      descripcion: document.getElementById('createProductDescription').value,
+      cantidad: parseInt(document.getElementById('createProductQuantity').value),
+      precio: parseFloat(document.getElementById('createProductPrice').value)
     };
 
-    // Función para eliminar un producto
-    window.eliminarProducto = function(id) {
-        if (confirm('¿Estás seguro de eliminar este producto?')) {
-            fetch(`${apiUrl}/${id}`, {
-                method: 'DELETE'
-            })
-            .then(() => {
-                cargarProductos(); // Recargar la lista de productos
-            })
-            .catch(error => console.log('Error al eliminar producto:', error));
-        }
-    };*/
+    // Hacer una solicitud POST para crear el producto
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Producto creado:', data);
+        createProductModal.style.display = 'none'; // Cerrar el modal después de la creación
+        loadProducts(); // Recargar los productos y actualizar la tabla
+      })
+      .catch(error => {
+        console.error('Error al crear el producto:', error);
+      });
+  };
 
-    // Cargar los productos al inicio
-    cargarProductos();
+  // Cargar productos al iniciar
+  loadProducts();
 });
