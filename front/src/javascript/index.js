@@ -12,20 +12,22 @@ document.addEventListener("DOMContentLoaded", function() {
                 data.forEach(producto => {
                     let row = productosTable.insertRow();
                     row.innerHTML = `
-                        <td>${producto.id}</td>
+                    <tr>
                         <td>${producto.nombre}</td>
                         <td>${producto.cantidad}</td>
                         <td>${producto.precio}</td>
-                        <td>
-                            <button class="modify-btn" onclick="modificarProducto(${producto.id})">Modificar</button>
-                            <button class="delete-btn" onclick="eliminarProducto(${producto.id})">Eliminar</button>
-                        </td>
-                    `;
+                        <td><button class="delete-btn" onclick="borrarProducto(${producto.id})">Borrar</button></td>
+                        <td><button class="buy-btn" onclick="comprarProducto(${producto.id})">Comprar</button></td>
+                    </tr>
+                    
+                        
+                        
+                    `
                 });
             })
             .catch(error => console.log('Error al cargar los productos:', error));
     }
-
+/*
     // Función para crear un nuevo producto
     createBtn.addEventListener('click', function() {
         const nombre = document.getElementById('nombre').value;
@@ -81,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => console.log('Error al eliminar producto:', error));
         }
-    };
+    };*/
 
     // Cargar los productos al inicio
     cargarProductos();

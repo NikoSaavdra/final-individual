@@ -15,31 +15,44 @@
     <div class="container">
         <h1>Productos</h1>
         
-        <!-- Botón Productos Disponibles -->
-        <button id="verProductosBtn">Productos Disponibles</button>
+        <table class="producto">
+          <thead>
+            <tr>
+              <th>NOMBRE</th>
+              <th>CANTIDAD</th>
+              <th>PRECIO</th>
+            </tr>
+          </thead>
+          <tbody>  
+          </tbody>
+    
         
-        <div id="productosList"></div>
-
-        <h2>Buscar Producto</h2>
+        <!--<h2>Buscar Producto</h2>
         <input type="text" id="buscarProductoInput" placeholder="Buscar por nombre del producto">
         <button id="buscarProductoBtn">Buscar</button>
+        <button id="buscarProductoBtn">Listar productos</button>
 
-        <!-- Detalles del Producto -->
+      
         <div id="productoDetalle" style="display:none;">
             <h3>Detalles del Producto</h3>
+
             <form id="productoForm">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre"><br><br>
+
+                <label for="nombre">Descripcion:</label>
+                <input type="text" id="descripcion" name="descripcion"><br><br>
 
                 <label for="cantidad">Cantidad:</label>
                 <input type="number" id="cantidad" name="cantidad"><br><br>
 
                 <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio"><br><br>
-
-                <button type="button" id="enviarModificacionBtn">Enviar Modificación</button>
+                <input type="number" id="precio" name="precio"><br><br>  
             </form>
-        </div>
+            <button type="button" id="VisualBtn">Enviar</button>
+            <button type="button" id="EditarBtn">Editar</button>
+            <button type="button" id="CancelarBtn">Cancelar</button>
+        </div>-->
     </div>
     <br>
       <footer>

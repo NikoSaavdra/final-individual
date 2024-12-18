@@ -8,10 +8,9 @@ public class ProductoMenu {
     private int id;
     private String nombre;
     private int cantidad;
-    private double precio;
+    private float precio;
 
-    // Constructor de la clase
-    public ProductoMenu(int id, String nombre, int cantidad, double precio) {
+    public ProductoMenu(int id, String nombre, int cantidad, float precio) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -30,7 +29,7 @@ public class ProductoMenu {
         return cantidad;
     }
 
-    public double getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
@@ -98,6 +97,7 @@ public class ProductoMenu {
     }
 
     private void mostrarProductosDisponibles(ArrayList<ProductoMenu> productos) {
+        
         System.out.println(Colores.VERDE + "Ha seleccionado la opcion 1" + Colores.RESET);
         System.out.println(Colores.BLANCO + "Los productos disponibles son:" + Colores.RESET);
 
@@ -106,6 +106,7 @@ public class ProductoMenu {
             System.out.println(Colores.ROJO + "Nombre: " + Colores.RESET + Colores.NEGRITA + producto.getNombre() + Colores.RESET);
             System.out.println(Colores.ROJO + "Id: " + Colores.RESET + Colores.NEGRITA + producto.getId() + Colores.RESET);
             System.out.println(Colores.ROJO + "Cantidad: " + Colores.RESET + Colores.NEGRITA + producto.getCantidad() + Colores.RESET);
+            System.out.println(Colores.ROJO + "Precio: " + Colores.RESET + Colores.NEGRITA + producto.getPrecio() + Monedas.euro + Colores.RESET);
             System.out.println(Colores.CELESTE + "****************************************" + Colores.RESET);
         }
     }
@@ -115,6 +116,7 @@ public class ProductoMenu {
         System.out.println("Ingrese el nombre del producto:");
         String nombreBuscado = valorEntrada.nextLine();
         boolean encontrado = false;
+        float total = 0.0f;
 
         for (ProductoMenu producto : productos) {
             if (producto.getNombre().equalsIgnoreCase(nombreBuscado)) {
@@ -124,7 +126,8 @@ public class ProductoMenu {
 
                 if (producto.getCantidad() >= cantidadComprar) {
                     producto.cantidad -= cantidadComprar;
-                    System.out.println("Ha comprado " + cantidadComprar + " unidades de " + nombreBuscado);
+                    total = producto.precio * cantidadComprar;
+                    System.out.println("Ha comprado " + cantidadComprar + " unidades de " + nombreBuscado + "   PRECIO TOTAL: " + total + Monedas.euro);
                 } else {
                     System.out.println("La cantidad solicitada es mayor al stock disponible.");
                 }
@@ -154,7 +157,7 @@ public class ProductoMenu {
         System.out.println(Colores.NEGRITA + "Ingrese la cantidad del nuevo producto:" + Colores.RESET);
         int cantidad = scanner.nextInt();
         System.out.println(Colores.NEGRITA + "Ingrese el precio del nuevo producto:" + Colores.RESET);
-        double precio = scanner.nextDouble();
+        float precio = scanner.nextFloat();
         scanner.nextLine(); 
 
         int nuevoId = productos.size() + 1;
@@ -169,15 +172,17 @@ public class ProductoMenu {
         System.out.println(Colores.NEGRITA + "Ingrese el nombre del producto a modificar:" + Colores.RESET);
         String nombreBuscado = valorEntrada.nextLine();
         boolean encontrado = false;
+        
 
         for (ProductoMenu producto : productos) {
             if (producto.getNombre().equalsIgnoreCase(nombreBuscado)) {
-                System.out.println(Colores.NEGRITA + "Ingrese la nueva cantidad:" + Colores.RESET);
+                System.out.println(Colores.NEGRITA + "Ingrese la cantidad:" + Colores.RESET);
                 int nuevaCantidad = valorEntrada.nextInt();
                 valorEntrada.nextLine();
+                
 
-                producto.cantidad = nuevaCantidad;
-                System.out.println(Colores.AMARILLO + "Cantidad del producto " + nombreBuscado + " modificada a " + nuevaCantidad + 
+                producto.cantidad += nuevaCantidad; 
+                System.out.println(Colores.AMARILLO + "Cantidad del producto " + nombreBuscado + " modificada a " + producto.cantidad + 
                            " unidades." + Colores.RESET);
                 encontrado = true;
                 break;

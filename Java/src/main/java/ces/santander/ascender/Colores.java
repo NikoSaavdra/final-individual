@@ -19,3 +19,7 @@ public class Colores {
     public static final String SUBRAYADO = "\033[4m";       
 }
 
+class Monedas{
+    public static String euro = " \u20AC";
+}
+
