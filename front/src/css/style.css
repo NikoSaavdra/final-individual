@@ -1,13 +1,31 @@
 h1 {
+  font-size: 48px;
   padding: 10px;
   text-align: center;
-  font-weight: bold;       /* Texto en negrita */
+  font-weight: bold; 
+  font-family: 'Lora', serif;   
+    
 }
 
 .grid-container {
   display: grid;            
   justify-items: center;     
 }
+
+/* Alinear contenido de la columna "Cantidad" al centro */
+#productosTable td.cantidad, #productosTable th.cantidad {
+  text-align: center; /* Centrado horizontal */
+}
+
+/* Alinear contenido de la columna "Precio" a la derecha y agregar el símbolo de euro */
+#productosTable td.precio, #productosTable th.precio {
+  text-align: right; /* Alineación a la derecha */
+}
+
+#productosTable td.precio::after {
+  content: " €"; /* Agregar el símbolo del euro */
+}
+
 
 .create-btn {
   padding: 10px 20px;    /* Espaciado dentro del botón */
@@ -23,45 +41,81 @@ h1 {
   border: none;  /* Elimina el borde de la última columna, donde están los botones */
 }
 
-  body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  th {
-    background-color: #f4f4f4;
-  }
-  button {
-    padding: 5px 10px;
-    margin: 5px;
-    cursor: pointer;
-  }
-  .create-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: green;
-    color: white;
-    border: none;
-  }
-  .delete-btn {
-    background-color: red;
-    color: white;
-  }
-  .buy-btn {
-    background-color: blue;
-    color: white;
-  }
+/* Estilos generales para el body */
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Organiza el contenido en columnas */
+  min-height: 100vh; /* Asegura que el contenido siempre ocupe al menos toda la altura de la ventana */
+}
 
-  /* Estilo para el Modal */
+/* Estilo para el encabezado */
+header {
+  background-color: #00bcd4; /* Celeste */
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+header h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 36px;
+  margin: 0;
+}
+
+/* Estilo para el cuerpo (body) */
+main {
+  flex: 1; /* Hace que el cuerpo ocupe el espacio restante */
+  padding: 20px;
+}
+
+/* Estilo para el pie de página */
+footer {
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: relative; /* Se asegura de que no se solape con el contenido */
+  margin-top: 20px;
+}
+
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+button {
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.create-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+}
+
+.buy-btn {
+  background-color: blue;
+  color: white;
+}
+
+/* Estilo para el Modal */
 .modal {
   display: none; /* Ocultar el modal por defecto */
   position: fixed;
@@ -150,6 +204,71 @@ button {
 .ver-btn, .buy-btn, .del-btn {
   margin: 0 10px;  /* Aplica margen izquierdo y derecho de 10px */
 }
+/* Estilo para el modal de modificar producto */
+#editProductModal {
+  display: none; /* Ocultar por defecto */
+  position: fixed; /* Fijar el modal en la pantalla */
+  top: 50%; /* Centrado verticalmente */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste para centrar el modal */
+  width: 80%; /* Ancho del modal, puedes ajustarlo */
+  max-width: 400px; /* Máximo ancho del modal */
+  background-color: rgb(255, 251, 251); /* Fondo oscuro semitransparente */
+  z-index: 9999; /* Asegura que el modal esté encima de otros elementos */
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  overflow: hidden; /* Evita el desbordamiento */
+}
+
+/* Estilo para el contenido dentro del modal */
+#editProductModal .modal-content {
+  background-color: #fff;
+  color: #444;
+  padding: 20px;
+  width: 100%; /* Ocupa el 100% del ancho del contenedor */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Estilo para las cajas de texto (inputs) */
+#editProductModal input {
+  width: 100%; /* Las cajas de texto ocupan el 100% del ancho del modal */
+  max-width: 350px; /* Establecer un tamaño máximo */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Estilo para los botones */
+#editProductModal button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 350px; /* Máximo ancho de los botones */
+  margin-top: 10px;
+}
+
+/* Efecto hover para los botones */
+#editProductModal button:hover {
+  background-color: #218838;
+}
+
+#editProductModal button[type="button"] {
+  background-color: #dc3545;
+}
+
+#editProductModal button[type="button"]:hover {
+  background-color: #c82333;
+}
+
 
 #productDetail {
   background-color: #f9f9f9;
@@ -211,7 +330,6 @@ button {
   color: white;            /* Texto blanco para que se destaque sobre el fondo azul */
 }
 
-
 /* Estilos para los encabezados de la tabla */
 #productosTable thead {
   background-color: #007BFF;  /* Color de fondo de los encabezados */
@@ -272,33 +390,6 @@ button {
   opacity: 0.9; /* Efecto hover de los botones */
 }
 
-/* Modal base: Fondo oscuro con la posición fija */
-.modal {
-  display: none; /* Los modales estarán ocultos por defecto */
-  position: fixed; /* Modal con posición fija */
-  top: 50%; /* Coloca el modal en el medio de la pantalla */
-  left: 50%; /* Centra el modal horizontalmente */
-  transform: translate(-50%, -50%); /* Ajuste para que esté completamente centrado */
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
-  z-index: 1000; /* Asegura que el modal esté sobre otros elementos */
-  width: 60%; /* Ancho del modal (ajústalo a tu gusto) */
-  max-width: 800px; /* Ancho máximo para pantallas grandes */
-  height: auto; /* La altura será ajustada automáticamente */
-  padding: 20px;
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra alrededor del modal */
-  overflow-y: auto; /* Si el contenido es largo, añade scroll */
-  transition: opacity 0.3s ease; /* Transición suave para mostrar/ocultar el modal */
-}
-
-/* Contenido del modal */
-.modal-content {
-  background-color: #fff; /* Fondo blanco para el contenido */
-  padding: 20px;
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor del contenido */
-  text-align: center; /* Centra todo el contenido dentro del modal */
-}
 
 /* Modal de detalles */
 #productDetail .modal-content {
@@ -306,12 +397,14 @@ button {
 }
 
 #productDetail h3 {
-  color: #007bff; /* Azul para el título */
+  color: #ff0000; /* Azul para el título */
+  margin-left: 600px;
 }
 
 #productDetail p {
   font-size: 18px; /* Tamaño de texto mayor para los detalles */
   margin-bottom: 10px;
+  margin-left: 400px;
 }
 
 #productDetail span {
@@ -321,7 +414,7 @@ button {
 
 #productDetail button {
   display: block;
-  width: 100%;
+  margin-left: 900px;
   background-color: #007bff;
   color: white;
   padding: 10px;
@@ -330,108 +423,230 @@ button {
   cursor: pointer;
   font-size: 16px;
   margin-top: 20px;
+  width: auto;
 }
 
 #productDetail button:hover {
   background-color: #0056b3;
 }
 
-/* Estilo para el modal de edición */
-#editProductModal .modal-content {
-  background-color: #fff;
-  color: #444;
-}
 
-#editProductModal h2 {
-  color: #28a745; /* Verde para el título */
-}
 
-#editProductModal form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#editProductModal input {
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#editProductModal button[type="submit"],
-#editProductModal button[type="button"] {
-  background-color: #28a745; /* Verde para el botón de guardar */
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-}
-
-#editProductModal button[type="button"] {
-  background-color: #dc3545; /* Rojo para el botón cancelar */
-}
-
-#editProductModal button:hover {
-  background-color: #218838; /* Verde más oscuro */
-}
-
-#editProductModal button[type="button"]:hover {
-  background-color: #c82333; /* Rojo más oscuro */
-}
-
-/* Estilo de fondo oscuro cuando el modal está visible */
-.modal-overlay {
+/* Modal de mensaje */
+#messageModal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con opacidad */
-  z-index: 999; /* Fondo oscuro debajo del modal */
-  display: none; /* Inicialmente oculto */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* Mostrar el fondo oscuro cuando el modal se activa */
-.modal.show {
-  display: block;
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
 }
 
-.modal-overlay.show {
-  display: block;
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }
-/* Estilo para los botones dentro de los modales */
-#productDetail button,
-#editProductModal button {
-  background-color: #007bff; /* Azul para los botones */
+
+button {
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #007bff;
   color: white;
-  padding: 10px 20px; /* Espaciado interno más pequeño */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para el modal */
+
+#buyProductModal, #createProductModal {
+  display: none; /* Ocultar por defecto */
+  position: fixed; /* Fijar el modal en la pantalla */
+  top: 10%; /* Mover el modal un poco hacia abajo */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  z-index: 9999; /* Asegura que el modal esté encima de otros elementos */
+  display: grid; /* Usamos grid para centrar el contenido */
+  justify-items: center; /* Centra horizontalmente */
+  align-items: start; /* Mueve el contenido hacia la parte superior */
+  overflow: hidden; /* Evita el desbordamiento */
+}
+
+
+/* Estilo para el contenido del modal */
+/* Estilo para el contenido del modal */
+#buyProductModal .modal-content, #createProductModal .modal-content {
+  background-color: #fff;
+  color: #444;
+  padding: 20px;
+  width: 80%; /* Ancho ajustable */
+  max-width: 500px; /* Ancho máximo */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin-top: 0%; /* Ajusta el valor según lo necesites */
+}
+
+
+/* Estilo para el título del modal */
+#createProductModal .modal-content h2 {
+  margin: 0 0 15px 0;
+  font-size: 1.5em;
+}
+
+/* Estilo para los inputs dentro del modal */
+#createProductModal .modal-content input {
+  width: 100%; /* Hacer que los campos ocupen todo el ancho disponible */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* Estilo para los botones dentro del modal */
+#createProductModal .modal-content button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+#createProductModal .modal-content button[type="submit"] {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+#createProductModal .modal-content button[type="button"] {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+}
+
+#createProductModal .modal-content button:hover {
+  opacity: 0.9;
+}
+
+#createProductModal .modal-content button[type="button"]:hover {
+  opacity: 0.8;
+}
+
+/* Estilo para el botón de cerrar */
+#createProductModal .modal-content .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2em;
+  color: #aaa;
+  cursor: pointer;
+}
+
+#createProductModal .modal-content .close-btn:hover {
+  color: #333;
+}
+
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px; /* Ajusta el tamaño del modal */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Estilo del título del modal */
+.modal-content h2 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilo de los inputs y etiquetas */
+label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 10px;
   font-size: 16px;
-  margin-top: 20px;
-  width: auto; /* Hace que el botón tenga un tamaño adecuado */
-  max-width: 200px; /* Establece un ancho máximo para los botones */
-  margin-left: auto; /* Centra el botón horizontalmente */
-  margin-right: auto; /* Centra el botón horizontalmente */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease;
 }
 
-#productDetail button:hover,
-#editProductModal button:hover {
-  background-color: #0056b3; /* Color más oscuro para el hover */
+input[type="text"]:focus, input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-/* Estilo específico para el botón "Cancelar" en el modal de edición */
-#editProductModal button[type="button"] {
-  background-color: #dc3545; /* Rojo para el botón cancelar */
+/* Estilo de los botones */
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#editProductModal button[type="button"]:hover {
-  background-color: #c82333; /* Rojo más oscuro para hover */
+button:hover {
+  background-color: #0056b3;
 }
 
+/* Estilo del botón de cancelar */
+#cancelCreateBtn {
+  background-color: #f44336;
+}
+
+#cancelCreateBtn:hover {
+  background-color: #d32f2f;
+}
+
+/* Estilo para el botón de cerrar */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #f44336;
+}

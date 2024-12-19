@@ -29,8 +29,11 @@ public class ProductoController {
     private Map<Long, Producto> productos = new HashMap<>();
 
     public ProductoController() {
-        productos.put(1l, new Producto(1, "Producto A", "Descripción A", 100.0f, 10));
-        productos.put(2l, new Producto(2, "Producto B", "Descripción B", 150.0f, 0));
+        // Añadir productos (herramientas)
+        productos.put(1L, new Producto(1, "Martillo", "Martillo de acero con mango de madera", 15.0f, 20));
+        productos.put(2L, new Producto(2, "Destornillador", "Destornillador de cruz con mango ergonómico", 8.5f, 50));
+        productos.put(3L, new Producto(3, "Alicates", "Alicates de alta resistencia para trabajos pesados", 12.0f, 30));
+        productos.put(4L, new Producto(4, "Sierra", "Sierra de mano con hoja de acero inoxidable", 25.0f, 15));
     }
 
 

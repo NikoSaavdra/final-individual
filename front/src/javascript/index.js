@@ -25,12 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let selectedProduct = null; // Producto seleccionado para comprar
 
-  
+
   function loadProducts() {
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        tableBody.innerHTML = ''; 
+        tableBody.innerHTML = '';
 
         data.forEach(product => {
           const row = document.createElement('tr');
@@ -40,12 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
           const quantityCell = document.createElement('td');
           quantityCell.textContent = product.cantidad;
+          quantityCell.classList.add('cantidad');
 
           const priceCell = document.createElement('td');
           priceCell.textContent = product.precio;
+          priceCell.classList.add('precio'); 
 
-          const actionsCell = document.createElement('td'); 
-          
+          const actionsCell = document.createElement('td');
+
           // Crear botón de visualizar
           const verButton = document.createElement('button');
           verButton.classList.add('ver-btn');
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const actButton = document.createElement('button');
           actButton.classList.add('act-btn');
           actButton.textContent = 'Modificar';
-          
+
           // Crear botón de comprar
           const buyButton = document.createElement('button');
           buyButton.classList.add('buy-btn');
@@ -79,17 +81,17 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           // Agregar eventos a los botones
-          verButton.onclick = function() {
+          verButton.onclick = function () {
             showProductDetails(product);  // Mostrar los detalles del producto
           };
 
           // Evento para modificar el producto
-          actButton.onclick = function() {
+          actButton.onclick = function () {
             showEditProductForm(product);  // Mostrar el formulario de edición
           };
 
           // Evento para eliminar el producto
-          borrarButton.onclick = function() {
+          borrarButton.onclick = function () {
             if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
               deleteProduct(product.id, row);
             }
@@ -154,28 +156,58 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // Mostrar el formulario de edición con los datos del producto
-  function showEditProductForm(product) {
-    selectedProduct = product;
-    
-    document.getElementById('editProductName').value = product.nombre;
-    document.getElementById('editProductDescription').value = product.descripcion;
-    document.getElementById('editProductQuantity').value = product.cantidad;
-    document.getElementById('editProductPrice').value = product.precio;
+function showEditProductForm(product) {
+  selectedProduct = product;
 
-    editProductModal.style.display = 'block'; // Mostrar el modal de edición
-  }
+  document.getElementById('editProductName').value = product.nombre;
+  document.getElementById('editProductDescription').value = product.descripcion;
+  document.getElementById('editProductQuantity').value = product.cantidad;
+  document.getElementById('editProductPrice').value = product.precio;
 
-  // Cerrar el formulario de edición
-  cancelEditBtn.onclick = function() {
-    editProductModal.style.display = 'none'; // Ocultar el formulario de edición
+  editProductModal.style.display = 'block'; // Mostrar el modal de edición
+}
+
+// Cerrar el formulario de edición
+cancelEditBtn.onclick = function () {
+  editProductModal.style.display = 'none'; // Ocultar el formulario de edición
+};
+
+// Guardar la edición (enviar el formulario de modificación)
+editProductForm.onsubmit = function (e) {
+  e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+  const updatedProduct = {
+    nombre: document.getElementById('editProductName').value,
+    descripcion: document.getElementById('editProductDescription').value,
+    cantidad: parseInt(document.getElementById('editProductQuantity').value),
+    precio: parseFloat(document.getElementById('editProductPrice').value)
   };
+
+  // Enviar la solicitud PUT para actualizar el producto
+  fetch(`${apiUrl}/${selectedProduct.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedProduct)
+  })
+    .then(response => response.json())
+    .then(data => {
+      showMessageModal('Producto actualizado con éxito');
+      editProductModal.style.display = 'none'; // Cerrar el modal de edición
+      loadProducts(); // Recargar los productos después de la modificación
+    })
+    .catch(error => {
+      console.error('Error al actualizar el producto:', error);
+      ('Error al actualizar el producto');
+    });
+};
+
 
   // Mostrar el modal de compra para un producto seleccionado
   function showBuyModal(product) {
     document.getElementById('productName').textContent = product.nombre;
     document.getElementById('productDescripcion').textContent = product.descripcion;
     document.getElementById('productDescripcion').textContent = product.descripcion;
-    document.getElementById('productPrice').textContent = `Precio: $${product.precio}`;
+    document.getElementById('productPrice').textContent = `Precio: ${product.precio}`+ ' €';
     buyProductModal.style.display = 'block';
   }
 
@@ -184,66 +216,86 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('detailProductName').textContent = product.nombre;
     document.getElementById('detailProductDescription').textContent = product.descripcion;
     document.getElementById('detailProductQuantity').textContent = product.cantidad;
-    document.getElementById('detailProductPrice').textContent = product.precio;
+    document.getElementById('detailProductPrice').textContent = product.precio + ' €';
 
     productDetailDiv.style.display = 'block'; // Mostrar el contenedor de detalles
   }
 
   // Cerrar el detalle del producto
-  closeDetailBtn.onclick = function() {
+  closeDetailBtn.onclick = function () {
     productDetailDiv.style.display = 'none'; // Ocultar el contenedor de detalles
   };
 
   // Confirmar compra
-  confirmBuyBtn.onclick = function () {
-    const quantity = parseInt(document.getElementById('productQuantity').value);
-    if (quantity <= 0 || quantity > selectedProduct.cantidad) {
-      alert('Cantidad no válida.');
-      return;
-    }
+confirmBuyBtn.onclick = function () {
 
-    fetch(`http://localhost:8080/productos/${selectedProduct.id}/compra`, {
-      method: 'POST',
+  // Enviar la solicitud de compra
+  fetch(`http://localhost:8080/productos/${selectedProduct.id}/compra`, {
+    method: 'POST',
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Mostrar el mensaje de éxito con el modal
+      showMessageModal('Compra Exitosa', data.message);
+      buyProductModal.style.display = 'none'; // Cerrar el modal de compra
+      loadProducts(); // Recargar productos después de la compra
     })
-      .then(response => response.json())
-      .then(data => {
-        alert(data.message);
-        buyProductModal.style.display = 'none';
-        loadProducts(); // Recargar productos después de la compra
-      })
-      .catch(error => {
-        console.error('Error al realizar la compra:', error);
-      });
-  };
+    .catch(error => {
+      console.error('Error al realizar la compra:', error);
+      showMessageModal('Error', 'Hubo un problema al realizar la compra.');
+    });
+};
+
 
   // Cancelar compra
   cancelBuyBtn.onclick = function () {
     buyProductModal.style.display = 'none';
   };
 
-   // Función para eliminar un producto
-   function deleteProduct(productId, row) {
+  function deleteProduct(productId, row) {
     fetch(`${apiUrl}/${productId}`, {
       method: 'DELETE',
     })
-    .then(response => response.json())
-    
-    .then(data => {
-      if (data.success) {
-        // Si la eliminación fue exitosa, eliminar la fila de la tabla
-        row.remove();
-        loadProducts(); // Recargar los productos
-        alert('Producto eliminado con éxito');
-      } else {
-        alert('No se pudo eliminar el producto');
-      }
-    })
-    .catch(error => {
-      console.error('Error al eliminar el producto:', error);
-      alert('Error al eliminar el producto');
-    });
+      .then(response => {
+        if (response.status === 204) {
+          row.remove(); // Eliminar la fila de la tabla inmediatamente
+          showMessageModal('Éxito', 'Producto eliminado con éxito');
+          loadProducts(); // Recargar los productos para reflejar los cambios
+        } else {
+          // Si no es 204, entonces mostramos un mensaje de error y lo registramos en la consola
+          return response.json().then(data => {
+            console.error('Error al eliminar el producto:', data);
+            showMessageModal('Error', 'No se pudo eliminar el producto: ' + (data.message || 'Error desconocido'));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error al eliminar el producto:', error);
+        showMessageModal('Error', 'Error al eliminar el producto');
+      });
+  }
+  // Mostrar el modal con un mensaje
+  function showMessageModal(title, message) {
+    const modal = document.getElementById('messageModal');
+    const titleElement = document.getElementById('modalMessageTitle');
+    const messageElement = document.getElementById('modalMessageText');
+    const closeBtn = document.getElementById('messageModalClose');
+    const btn = document.getElementById('modalMessageBtn');
+
+    titleElement.textContent = title;
+    messageElement.textContent = message;
+
+    modal.style.display = 'flex'; // Mostrar el modal
+
+    // Función para cerrar el modal
+    closeBtn.onclick = function () {
+      modal.style.display = 'none';
+    };
+
+    btn.onclick = function () {
+      modal.style.display = 'none';
+    };
   }
 
-  // Cargar productos al iniciar
   loadProducts();
 });
