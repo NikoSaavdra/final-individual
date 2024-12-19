@@ -52,13 +52,14 @@ public class ProductoMenu {
             System.out.println(Colores.AMARILLO + "2. Comprar producto" + Colores.RESET);
             System.out.println(Colores.AMARILLO + "3. Crear producto" + Colores.RESET);
             System.out.println(Colores.AMARILLO + "4. Modificar producto" + Colores.RESET);
-            System.out.println(Colores.AMARILLO + "5. Salir" + Colores.RESET);
+            System.out.println(Colores.AMARILLO + "5. Eliminar producto" + Colores.RESET);
+            System.out.println(Colores.AMARILLO + "6. Salir" + Colores.RESET);
             System.out.println(Colores.CELESTE + "=======================================" + Colores.RESET);
 
             int opcion = valorEntrada.nextInt();
             valorEntrada.nextLine();
 
-            if (opcion < 1 || opcion > 5) {
+            if (opcion < 1 || opcion > 6) {
                 throw new Exception("Opción no válida, por favor intente nuevamente.");
             }
 
@@ -113,21 +114,22 @@ public class ProductoMenu {
 
     private void comprarProducto(ArrayList<ProductoMenu> productos, Scanner valorEntrada) {
         System.out.println(Colores.VERDE + "Ha seleccionado la opcion 2" + Colores.RESET);
-        System.out.println("Ingrese el nombre del producto:");
-        String nombreBuscado = valorEntrada.nextLine();
+        System.out.println("Ingrese la Id del producto:");
+        int IdBuscado = valorEntrada.nextInt();
         boolean encontrado = false;
         float total = 0.0f;
 
         for (ProductoMenu producto : productos) {
-            if (producto.getNombre().equalsIgnoreCase(nombreBuscado)) {
-                System.out.println("Ingrese la cantidad a comprar:");
+            if (producto.getId() == IdBuscado) {
+                String nombreProducto = producto.nombre;  // Validar que no se ingrese una cantidad negativa
+                System.out.println("Ingrese la cantidad a comprar de: " + nombreProducto);
                 int cantidadComprar = valorEntrada.nextInt();
                 valorEntrada.nextLine(); 
 
                 if (producto.getCantidad() >= cantidadComprar) {
                     producto.cantidad -= cantidadComprar;
                     total = producto.precio * cantidadComprar;
-                    System.out.println("Ha comprado " + cantidadComprar + " unidades de " + nombreBuscado + "   PRECIO TOTAL: " + total + Monedas.euro);
+                    System.out.println("Ha comprado " + cantidadComprar + " unidades de " + nombreProducto + "   PRECIO TOTAL: " + total + Monedas.euro);
                 } else {
                     System.out.println("La cantidad solicitada es mayor al stock disponible.");
                 }
@@ -192,5 +194,31 @@ public class ProductoMenu {
         if (!encontrado) {
             System.out.println("Producto no encontrado.");
         }
+    }
+
+    // Crear metodo eliminar producto.
+    private void EliminarProducto(ArrayList<ProductoMenu> productos, Scanner valorEntrada) {
+        System.out.println(Colores.NEGRITA + Colores.VERDE + "Ha seleccionado la opcion 4" + Colores.RESET);
+        System.out.println(Colores.NEGRITA + "Ingrese el nombre del producto a modificar:" + Colores.RESET);
+        String nombreBuscado = valorEntrada.nextLine();
+        boolean encontrado = false;
+        
+        // Debe eliminar cada producto por su Id
+        for (ProductoMenu producto : productos) {
+            if (producto.getNombre().equalsIgnoreCase(nombreBuscado)) {
+                System.out.println(Colores.NEGRITA + "Ingrese la cantidad:" + Colores.RESET);
+                int nuevaCantidad = valorEntrada.nextInt();
+                valorEntrada.nextLine();
+                
+
+                producto.cantidad += nuevaCantidad; 
+                System.out.println(Colores.AMARILLO + "Cantidad del producto " + nombreBuscado + " modificada a " + producto.cantidad + 
+                           " unidades." + Colores.RESET);
+                encontrado = true;
+                break;
+            }
+        }
+
+        
     }
 }

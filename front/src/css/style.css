@@ -1,4 +1,29 @@
-body {
+h1 {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;       /* Texto en negrita */
+}
+
+.grid-container {
+  display: grid;            
+  justify-items: center;     
+}
+
+.create-btn {
+  padding: 10px 20px;    /* Espaciado dentro del botón */
+  font-size: 16px;       /* Tamaño de la fuente */
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#productosTable td:last-child {
+  border: none;  /* Elimina el borde de la última columna, donde están los botones */
+}
+
+  body {
     font-family: Arial, sans-serif;
     margin: 20px;
   }
@@ -78,3 +103,335 @@ button {
   margin: 10px;
   cursor: pointer;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+}
+
+.close-btn {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#confirmDeleteBtn, #cancelDeleteBtn {
+  padding: 10px 20px;
+  margin: 5px;
+}
+
+.ver-btn, .buy-btn, .del-btn {
+  margin: 0 10px;  /* Aplica margen izquierdo y derecho de 10px */
+}
+
+#productDetail {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+#productDetail h3 {
+  margin-bottom: 10px;
+}
+
+#productDetail p {
+  margin: 5px 0;
+}
+
+#closeDetailBtn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#closeDetailBtn:hover {
+  background-color: #e53935;
+}
+
+.del-btn {
+  background-color: #f44336; /* Rojo */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.del-btn:hover {
+  background-color: #e53935;
+}
+
+/* Estilos para la tabla */
+#productosTable {
+  width: 80%;                  /* Definir un ancho de 80% de la pantalla */
+  margin: 50px auto;           /* Centrar la tabla en la pantalla con un margen superior */
+  border-collapse: collapse;   /* Quitar los espacios entre celdas */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tabla */
+  background-color: #fff;      /* Fondo blanco para la tabla */
+  border-radius: 8px;          /* Bordes redondeados */
+}
+
+/* Estilo para los encabezados (th) */
+#productosTable th {
+  color: black;            /* Texto en color negro */
+  font-weight: bold;       /* Texto en negrita */
+  padding: 10px 15px;      /* Espaciado en las celdas de los encabezados */
+  text-align: left;        /* Alinear el texto de los encabezados a la izquierda */
+  background-color: #007BFF; /* Color de fondo para los encabezados */
+  color: white;            /* Texto blanco para que se destaque sobre el fondo azul */
+}
+
+
+/* Estilos para los encabezados de la tabla */
+#productosTable thead {
+  background-color: #007BFF;  /* Color de fondo de los encabezados */
+  color: white;               /* Color del texto */
+}
+
+#productosTable th {
+  padding: 10px 15px;         /* Espaciado en las celdas de los encabezados */
+  text-align: left;           /* Alinear el texto de los encabezados a la izquierda */
+}
+
+/* Estilos para las celdas de la tabla */
+#productosTable td {
+  padding: 10px 15px;         /* Espaciado en las celdas de la tabla */
+  border: 1px solid #ddd;     /* Borde sutil en las celdas */
+}
+
+/* Estilos para las filas de la tabla */
+#productosTable tbody tr {
+  transition: background-color 0.3s ease; /* Efecto suave para el hover */
+}
+
+#productosTable tbody tr:hover {
+  background-color: #f1f1f1; /* Color de fondo cuando se pasa el mouse sobre una fila */
+}
+
+/* Estilo de las celdas de acción (Botones de acción) */
+#productosTable td button {
+  padding: 5px 10px; /* Espaciado interno de los botones */
+  margin-right: 5px; /* Espaciado entre los botones */
+  border: none;
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer;   /* Cambiar cursor a puntero */
+}
+
+#productosTable td .ver-btn {
+  background-color: #28a745; /* Verde para el botón Visualizar */
+  color: white;
+}
+
+#productosTable td .act-btn {
+  background-color: #ffc107; /* Amarillo para el botón Modificar */
+  color: black;
+}
+
+#productosTable td .buy-btn {
+  background-color: #007bff; /* Azul para el botón Comprar */
+  color: white;
+}
+
+#productosTable td .del-btn {
+  background-color: #dc3545; /* Rojo para el botón Eliminar */
+  color: white;
+}
+
+/* Estilo de los botones en hover */
+#productosTable td button:hover {
+  opacity: 0.9; /* Efecto hover de los botones */
+}
+
+/* Modal base: Fondo oscuro con la posición fija */
+.modal {
+  display: none; /* Los modales estarán ocultos por defecto */
+  position: fixed; /* Modal con posición fija */
+  top: 50%; /* Coloca el modal en el medio de la pantalla */
+  left: 50%; /* Centra el modal horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste para que esté completamente centrado */
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+  z-index: 1000; /* Asegura que el modal esté sobre otros elementos */
+  width: 60%; /* Ancho del modal (ajústalo a tu gusto) */
+  max-width: 800px; /* Ancho máximo para pantallas grandes */
+  height: auto; /* La altura será ajustada automáticamente */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra alrededor del modal */
+  overflow-y: auto; /* Si el contenido es largo, añade scroll */
+  transition: opacity 0.3s ease; /* Transición suave para mostrar/ocultar el modal */
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff; /* Fondo blanco para el contenido */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor del contenido */
+  text-align: center; /* Centra todo el contenido dentro del modal */
+}
+
+/* Modal de detalles */
+#productDetail .modal-content {
+  background-color: #f9f9f9; /* Fondo gris claro */
+}
+
+#productDetail h3 {
+  color: #007bff; /* Azul para el título */
+}
+
+#productDetail p {
+  font-size: 18px; /* Tamaño de texto mayor para los detalles */
+  margin-bottom: 10px;
+}
+
+#productDetail span {
+  font-weight: bold;
+  color: #333;
+}
+
+#productDetail button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+#productDetail button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para el modal de edición */
+#editProductModal .modal-content {
+  background-color: #fff;
+  color: #444;
+}
+
+#editProductModal h2 {
+  color: #28a745; /* Verde para el título */
+}
+
+#editProductModal form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#editProductModal input {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#editProductModal button[type="submit"],
+#editProductModal button[type="button"] {
+  background-color: #28a745; /* Verde para el botón de guardar */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#editProductModal button[type="button"] {
+  background-color: #dc3545; /* Rojo para el botón cancelar */
+}
+
+#editProductModal button:hover {
+  background-color: #218838; /* Verde más oscuro */
+}
+
+#editProductModal button[type="button"]:hover {
+  background-color: #c82333; /* Rojo más oscuro */
+}
+
+/* Estilo de fondo oscuro cuando el modal está visible */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con opacidad */
+  z-index: 999; /* Fondo oscuro debajo del modal */
+  display: none; /* Inicialmente oculto */
+}
+
+/* Mostrar el fondo oscuro cuando el modal se activa */
+.modal.show {
+  display: block;
+}
+
+.modal-overlay.show {
+  display: block;
+}
+/* Estilo para los botones dentro de los modales */
+#productDetail button,
+#editProductModal button {
+  background-color: #007bff; /* Azul para los botones */
+  color: white;
+  padding: 10px 20px; /* Espaciado interno más pequeño */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  width: auto; /* Hace que el botón tenga un tamaño adecuado */
+  max-width: 200px; /* Establece un ancho máximo para los botones */
+  margin-left: auto; /* Centra el botón horizontalmente */
+  margin-right: auto; /* Centra el botón horizontalmente */
+}
+
+#productDetail button:hover,
+#editProductModal button:hover {
+  background-color: #0056b3; /* Color más oscuro para el hover */
+}
+
+/* Estilo específico para el botón "Cancelar" en el modal de edición */
+#editProductModal button[type="button"] {
+  background-color: #dc3545; /* Rojo para el botón cancelar */
+}
+
+#editProductModal button[type="button"]:hover {
+  background-color: #c82333; /* Rojo más oscuro para hover */
+}
+
