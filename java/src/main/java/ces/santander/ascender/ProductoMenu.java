@@ -251,6 +251,7 @@ public class ProductoMenu {
             ProductoMenu producto = iterator.next();
             if (producto.getId() == numeroId) {
                 String nombreProducto = producto.getNombre();
+                encontrado = true;
                 System.out.println(Colores.NEGRITA + "Producto encontrado: " + nombreProducto + Colores.RESET);
 
                 // Preguntar si realmente quiere eliminarlo
@@ -263,13 +264,13 @@ public class ProductoMenu {
                     iterator.remove();
                     System.out.println(
                             Colores.ROJO + "El producto " + nombreProducto + " ha sido eliminado." + Colores.RESET);
-                    encontrado = true;
+                    
                 } else {
                     System.out.println(Colores.AMARILLO + "Eliminación cancelada." + Colores.RESET);
                 }
                 break;
             }
-            if (!encontrado) {
+            if(!encontrado) {
                 System.out.println("Producto no encontrado");
             }
         }   

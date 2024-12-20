@@ -73,7 +73,7 @@ main {
 
 /* Estilo para el pie de página */
 footer {
-  color: white;
+  color: rgba(255, 255, 255, 0);
   padding: 10px;
   text-align: center;
   position: relative; /* Se asegura de que no se solape con el contenido */

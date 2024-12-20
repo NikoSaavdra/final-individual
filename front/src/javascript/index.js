@@ -22,11 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelEditBtn = document.getElementById('cancelEditBtn');
   const editProductForm = document.getElementById('editProductForm');
 
+  let selectedProduct = null; 
 
-  let selectedProduct = null; // Producto seleccionado para comprar
-
-
-  function loadProducts() {
+  function cargarProductos() {
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
@@ -68,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
           borrarButton.classList.add('del-btn');
           borrarButton.textContent = 'Eliminar';
 
-
           // Desactivar el botón si la cantidad es 0
           if (product.cantidad === 0) {
             buyButton.disabled = true;
@@ -76,24 +73,24 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             buyButton.onclick = function () {
               selectedProduct = product;
-              showBuyModal(product); // Mostrar el modal para comprar
+              comprarProducto(product); // Mostrar el modal para comprar
             };
           }
 
           // Agregar eventos a los botones
           verButton.onclick = function () {
-            showProductDetails(product);  // Mostrar los detalles del producto
+            mostrarProductoDetalle(product);  // Mostrar los detalles del producto
           };
 
           // Evento para modificar el producto
           actButton.onclick = function () {
-            showEditProductForm(product);  // Mostrar el formulario de edición
+            mostrarProducto(product);  // Mostrar el formulario de edición
           };
 
           // Evento para eliminar el producto
           borrarButton.onclick = function () {
             if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-              deleteProduct(product.id, row);
+              borrarProducto(product.id, row);
             }
           };
 
@@ -128,8 +125,8 @@ document.addEventListener("DOMContentLoaded", function () {
   cancelCreateBtn.onclick = function () {
     createProductModal.style.display = 'none';
   };
-
-  // Crear producto (enviar el formulario)
+  
+  // Crear producto
   createProductForm.onsubmit = function (e) {
     e.preventDefault(); // Prevenir el envío del formulario
 
@@ -139,7 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
       cantidad: parseInt(document.getElementById('createProductQuantity').value),
       precio: parseFloat(document.getElementById('createProductPrice').value)
     };
-
+    
+    if (!productName || !productDescription || isNaN(productQuantity) || isNaN(productPrice)) {
+      alert('Por favor, complete todos los campos correctamente.');
+      return;
+    }
     fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -148,15 +149,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(response => response.json())
       .then(data => {
         createProductModal.style.display = 'none';
-        loadProducts(); // Recargar los productos
+        cargarProductos(); // Recargar los productos
       })
       .catch(error => {
         console.error('Error al crear el producto:', error);
       });
   };
 
-  // Mostrar el formulario de edición con los datos del producto
-function showEditProductForm(product) {
+function mostrarProducto(product) {
   selectedProduct = product;
 
   document.getElementById('editProductName').value = product.nombre;
@@ -193,7 +193,7 @@ editProductForm.onsubmit = function (e) {
     .then(data => {
       showMessageModal('Producto actualizado con éxito');
       editProductModal.style.display = 'none'; // Cerrar el modal de edición
-      loadProducts(); // Recargar los productos después de la modificación
+      cargarProductos(); // Recargar los productos después de la modificación
     })
     .catch(error => {
       console.error('Error al actualizar el producto:', error);
@@ -201,9 +201,8 @@ editProductForm.onsubmit = function (e) {
     });
 };
 
-
   // Mostrar el modal de compra para un producto seleccionado
-  function showBuyModal(product) {
+  function comprarProducto(product) {
     document.getElementById('productName').textContent = product.nombre;
     document.getElementById('productDescripcion').textContent = product.descripcion;
     document.getElementById('productDescripcion').textContent = product.descripcion;
@@ -212,7 +211,7 @@ editProductForm.onsubmit = function (e) {
   }
 
   // Función para mostrar los detalles del producto
-  function showProductDetails(product) {
+  function mostrarProductoDetalle(product) {
     document.getElementById('detailProductName').textContent = product.nombre;
     document.getElementById('detailProductDescription').textContent = product.descripcion;
     document.getElementById('detailProductQuantity').textContent = product.cantidad;
@@ -238,7 +237,7 @@ confirmBuyBtn.onclick = function () {
       // Mostrar el mensaje de éxito con el modal
       showMessageModal('Compra Exitosa', data.message);
       buyProductModal.style.display = 'none'; // Cerrar el modal de compra
-      loadProducts(); // Recargar productos después de la compra
+      cargarProductos(); // Recargar productos después de la compra
     })
     .catch(error => {
       console.error('Error al realizar la compra:', error);
@@ -246,13 +245,12 @@ confirmBuyBtn.onclick = function () {
     });
 };
 
-
   // Cancelar compra
   cancelBuyBtn.onclick = function () {
     buyProductModal.style.display = 'none';
   };
 
-  function deleteProduct(productId, row) {
+  function borrarProducto(productId, row) {
     fetch(`${apiUrl}/${productId}`, {
       method: 'DELETE',
     })
@@ -260,7 +258,7 @@ confirmBuyBtn.onclick = function () {
         if (response.status === 204) {
           row.remove(); // Eliminar la fila de la tabla inmediatamente
           showMessageModal('Éxito', 'Producto eliminado con éxito');
-          loadProducts(); // Recargar los productos para reflejar los cambios
+          cargarProductos(); // Recargar los productos para reflejar los cambios
         } else {
           // Si no es 204, entonces mostramos un mensaje de error y lo registramos en la consola
           return response.json().then(data => {
@@ -297,5 +295,5 @@ confirmBuyBtn.onclick = function () {
     };
   }
 
-  loadProducts();
+  cargarProductos();
 });
